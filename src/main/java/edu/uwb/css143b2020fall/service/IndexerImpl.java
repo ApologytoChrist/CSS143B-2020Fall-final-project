@@ -11,6 +11,9 @@ import java.util.Map;
 public class IndexerImpl implements Indexer {
     public Map<String, List<List<Integer>>> index(List<String> docs) {
         Map<String, List<List<Integer>>> indexes = new HashMap<>();
+        if (docs == null) {
+            return indexes;
+        }
         int listSize = docs.size();
         for (int i = 0; i < docs.size();i++) {
             String[] docWords = docs.get(i).trim().split("\\s+");
@@ -35,6 +38,9 @@ public class IndexerImpl implements Indexer {
         Map<String, List<Integer>> wordLocations = new HashMap<>();
         for (int i = 0; i < words.length; i++) {
             String currentWord = words[i];
+            if (currentWord.equals("")) {
+                return wordLocations;
+            }
             if (!wordLocations.containsKey(currentWord)) {
                 List<Integer> wordLocation = new ArrayList<>();
                 wordLocation.add(i);
