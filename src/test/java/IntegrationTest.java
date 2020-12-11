@@ -34,6 +34,62 @@ public class IntegrationTest {
         }
     }
 
+    @Test
+    public void extraCreditTestIntegration() {
+        List<TestCase> cases = extraCreditTestCases();
+        for (TestCase testCase : cases) {
+            List<Integer> actual = searcher.search(
+                    testCase.target,
+                    indexer.index(testCase.documents)
+            );
+            assertEquals(testCase.expect, actual);
+        }
+    }
+
+    private List<TestCase> extraCreditTestCases() {
+        List<String> documents = extraDocuments();
+        List<TestCase> testCases = new ArrayList<>(
+            Arrays.asList(
+                new TestCase(
+                   documents,
+                   "you",
+                    new ArrayList<>(Arrays.asList(0, 2))
+                ),
+                new TestCase(
+                    documents,
+                    "important things",
+                    new ArrayList<>(Arrays.asList(1, 2))
+                ),
+                new TestCase(
+                    documents,
+                    "almost",
+                    new ArrayList<>(Arrays.asList(0, 2))
+                ),
+                new TestCase(
+                    documents,
+                    "in things",
+                    Util.emptyResult()
+                ),
+                new TestCase(
+                    documents,
+                    "croissant",
+                    new ArrayList<>(Arrays.asList(0, 1))
+                )
+            )
+        );
+        return testCases;
+    }
+
+    private List<String> extraDocuments() {
+        return new ArrayList<>(
+            Arrays.asList(
+               "you almost made me drop my croissant",
+               "my croissant has got a lot of important things in it",
+               "important things are almost as important as you"
+            )
+        );
+    }
+
     private List<TestCase> getTestCase() {
         List<String> documents = Util.getDocumentsForIntTest();
 
