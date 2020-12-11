@@ -16,7 +16,7 @@ public class IndexerImpl implements Indexer {
         }
         int listSize = docs.size();
         for (int i = 0; i < docs.size();i++) {
-            String[] docWords = docs.get(i).trim().split("\\s+");
+            String[] docWords = docs.get(i).trim().split("[^\\w']+");
             Map<String, List<Integer>> wordLocations = wordLocations(docWords);
             for (String key : wordLocations.keySet()) {
                 if (!indexes.containsKey(key)) {
